@@ -6,7 +6,11 @@
     "Main": "MainAlt",
     "Login": "LoginAlt",
     "Register": "RegisterAlt",
-    "Settings": "SettingsAlt"
+    "Settings": "SettingsAlt",
+    "Editor": "Editor",
+    "Article": "Article",
+    "Profile": "Profile",
+    "ProfileFavorites": "ProfileFavorites"
   },
   "redux": {
     "logger": false

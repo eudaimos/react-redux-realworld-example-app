@@ -27,6 +27,10 @@ const HomeFeature = { Home, HomeAlt };
 const LoginFeature = { Login, LoginAlt };
 const RegisterFeature = { Register, RegisterAlt };
 const SettingsFeature = { Settings, SettingsAlt };
+const EditorFeature = { Editor };
+const ArticleFeature = { Article };
+const ProfileFeature = { Profile };
+const ProfileFavoritesFeature = { ProfileFavorites };
 
 const mapStateToProps = state => {
   return {
@@ -77,12 +81,12 @@ class App extends React.Component {
             <Route exact path="/" component={HomeFeature[components.Home]}/>
             <Route path="/login" component={LoginFeature[components.Login]} />
             <Route path="/register" component={RegisterFeature[components.Register]} />
-            <Route path="/editor/:slug" component={Editor} />
-            <Route path="/editor" component={Editor} />
-            <Route path="/article/:id" component={Article} />
+            <Route path="/editor/:slug" component={EditorFeature[components.Editor]} />
+            <Route path="/editor" component={EditorFeature[components.Editor]} />
+            <Route path="/article/:id" component={ArticleFeature[components.Article]} />
             <Route path="/settings" component={SettingsFeature[components.Settings]} />
-            <Route path="/@:username/favorites" component={ProfileFavorites} />
-            <Route path="/@:username" component={Profile} />
+            <Route path="/@:username/favorites" component={ProfileFavoritesFeature[components.ProfileFavorites]} />
+            <Route path="/@:username" component={ProfileFeature[components.Profile]} />
           </Switch>
         </div>
       );
