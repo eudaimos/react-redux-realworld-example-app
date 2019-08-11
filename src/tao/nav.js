@@ -10,6 +10,10 @@ export function goSignIn() {
   TAO.setCtx({ t: 'user', a: 'enter', o: 'anon' });
 }
 
+export function goSignOut() {
+  TAO.setCtx({ t: 'user', a: 'exit', o: 'anon' });
+}
+
 export function goRegister() {
   TAO.setCtx({ t: 'user', a: 'new', o: 'anon' });
 }

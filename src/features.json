@@ -1,10 +1,13 @@
 {
   "useTAO": true,
-  "Header": "HeaderAlt",
-  "Home": "HomeAlt",
-  "Main": "MainAlt",
-  "Login": "LoginAlt",
-  "Register": "RegisterAlt",
+  "components": {
+    "Header": "HeaderAlt",
+    "Home": "HomeAlt",
+    "Main": "MainAlt",
+    "Login": "LoginAlt",
+    "Register": "RegisterAlt",
+    "Settings": "SettingsAlt"
+  },
   "redux": {
     "logger": false
   }

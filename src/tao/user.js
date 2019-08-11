@@ -4,7 +4,6 @@ import agent from '../agent';
 TAO.addInterceptHandler({ t: 'user', a: 'find', o: 'portal' }, (tao, { portal }) => {
   if (!portal || !portal.token) {
     return new AppCtx('user', 'fail', 'anon', { fail: { auth: true, errors: { token: ['missing token'] } } });
-    // return new AppCtx('home', 'view', 'anon');
   }
 });
 
@@ -72,14 +71,17 @@ TAO.addAsyncHandler({ t: 'user', a: 'enter', o: 'portal' }, (tao, { user }) => {
 
 // don't provide a way to update a user when orient: anon
 TAO.addInlineHandler({ t: 'user', a: 'update', o: 'portal' }, (tao, data) => {
-  const { user, portal } = data;
-  return agent.Auth.save(user)
-    .then(({ user }) => new AppCtx('user', 'stored', 'portal', user, null, portal))
+  const { user: currentUser, update, portal } = data;
+  return agent.Auth.save(update)
+    .then(({ user }) => new AppCtx('user', 'stored', 'portal', user, null, { token: user.token }))
     .catch(err => {
       const { errors } = err.response ? err.response.body : {};
-      return new AppCtx('user', 'fail', 'portal', user, { errors }, portal);
+      return new AppCtx('user', 'fail', 'portal', currentUser, { errors, update }, portal);
     });
 });
+
+TAO.addInlineHandler({ t: 'user', a: 'stored', o: 'portal' },
+  (tao, data) => new AppCtx('home', 'enter', 'portal', { portal: data.portal }));
 
 function isValidInput(value) {
   return value && typeof value === 'string' && value.trim().length;
@@ -128,6 +130,6 @@ TAO.addAsyncHandler({ t: 'user', a: 'exit' }, (tao, data) => {
   window.localStorage.removeItem('jwt');
 });
 
-TAO.addInlineHandler({ t: 'user', a: 'exit', o: 'portal' }, (tao, data) => {
+TAO.addInlineHandler({ t: 'user', a: 'exit' }, (tao, data) => {
   return new AppCtx('home', 'enter', 'anon');
 });

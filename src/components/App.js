@@ -16,14 +16,17 @@ import ProfileFavorites from '../components/ProfileFavorites';
 import Register from '../components/Register';
 import RegisterAlt from '../components/RegisterAlt';
 import Settings from '../components/Settings';
+import SettingsAlt from '../components/SettingsAlt';
+
 import { store } from '../store';
 import { push } from 'react-router-redux';
-import features from '../features.json';
+import { components } from '../features.json';
 
 const HeaderFeature = { Header, HeaderAlt };
 const HomeFeature = { Home, HomeAlt };
 const LoginFeature = { Login, LoginAlt };
 const RegisterFeature = { Register, RegisterAlt };
+const SettingsFeature = { Settings, SettingsAlt };
 
 const mapStateToProps = state => {
   return {
@@ -41,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const HeaderComponent = props => {
-  const Header = HeaderFeature[features.Header];
+  const Header = HeaderFeature[components.Header];
   return (
     <Header appName={props.appName} currentUser={props.currentUser} />
   );
@@ -71,13 +74,13 @@ class App extends React.Component {
         <div>
           {HeaderComponent(this.props)}
           <Switch>
-            <Route exact path="/" component={HomeFeature[features.Home]}/>
-            <Route path="/login" component={LoginFeature[features.Login]} />
-            <Route path="/register" component={RegisterFeature[features.Register]} />
+            <Route exact path="/" component={HomeFeature[components.Home]}/>
+            <Route path="/login" component={LoginFeature[components.Login]} />
+            <Route path="/register" component={RegisterFeature[components.Register]} />
             <Route path="/editor/:slug" component={Editor} />
             <Route path="/editor" component={Editor} />
             <Route path="/article/:id" component={Article} />
-            <Route path="/settings" component={Settings} />
+            <Route path="/settings" component={SettingsFeature[components.Settings]} />
             <Route path="/@:username/favorites" component={ProfileFavorites} />
             <Route path="/@:username" component={Profile} />
           </Switch>
