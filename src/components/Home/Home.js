@@ -1,10 +1,10 @@
 import React from 'react';
 import Banner from './Banner';
-// import MainView from './MainView';
 import MainViewAlt from './MainViewAlt';
 import Tags from '../Tags';
 
-const Home = ({ token, appName }) => {
+const Home = props => {
+  const { token, appName, tab, tag, onAll, onFeed } = props;
   return (
     <div className="home-page">
 
@@ -12,7 +12,7 @@ const Home = ({ token, appName }) => {
 
       <div className="container page">
         <div className="row">
-          <MainViewAlt token={token} />
+          <MainViewAlt token={token} tab={tab} tag={tag} onAll={onAll} onFeed={onFeed} />
 
           <div className="col-md-3">
             <div className="sidebar">

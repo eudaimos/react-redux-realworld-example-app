@@ -18,7 +18,7 @@ ReactDOM.render((
   <TaoProvider TAO={TAO}>
     <DataHandler
       name="appData"
-      term="app" action="load"
+      term="app" action={['init', 'load']}
       handler={(tao, data, set, current) => ({ ...current, ...data.app })}
       default={{ name: '' }}
     >
