@@ -46,8 +46,13 @@ TAO.addInterceptHandler({ t: 'user', a: 'find', o: 'anon' }, validateLogin);
 
 TAO.removeInterceptHandler({ t: 'user', a: 'find', o: 'anon' }, validateLogin);
 
-TAO.addInlineHandler({ t: 'user', a: 'enter', o: 'portal' }, (tao, { portal }) => {
-  return new AppCtx('home', 'enter', 'portal', { portal })
+// wait until the app is loaded, then redirect logins to home
+// need to use URL to determine where to go when loading and ensure user is gotten before
+// loading any data
+TAO.addInlineHandler({ t: 'app', a: 'load' }, () => {
+  TAO.addInlineHandler({ t: 'user', a: 'enter', o: 'portal' }, (tao, { portal }) => {
+    return new AppCtx('home', 'enter', 'portal', { portal });
+  });
 });
 
 // don't provide a way to add a user when orient: portal

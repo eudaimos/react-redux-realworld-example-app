@@ -15,22 +15,28 @@ TAO.addInterceptHandler({ t: 'app', a: 'init', o: 'anon' }, (tao, data) => {
   }
 });
 
+TAO.addInlineHandler({ t: 'app', a: 'init', o: 'anon' }, (tao, data) => {
+  return new AppCtx('app', 'load', 'anon', { app: data.app });
+});
+
 TAO.addInterceptHandler({ o: 'anon' }, () => agent.setToken());
 TAO.addInterceptHandler({ o: 'portal' }, (tao, { portal }) => agent.setToken(portal.token));
 
-TAO.addInlineHandler({ t: 'app', a: 'init' }, (tao, data) => {
-  return new AppCtx('app', 'load', tao.o, { app: data.app, orient: data[tao.o] });
-});
-
-TAO.addAsyncHandler({ t: 'app', a: 'init', o: 'portal' }, (tao, { portal }) => {
+TAO.addInlineHandler({ t: 'app', a: 'init', o: 'portal' }, (tao, { portal }) => {
   return new AppCtx('user', 'find', 'portal', { portal: portal });
 });
+
+// before the app is loaded we need to login the portal user then load the app
+const triggerAppLoad = (tao, { portal }) => new AppCtx('app', 'load', 'portal', { portal });
+TAO.addInlineHandler({ t: 'user', a: 'enter', o: 'portal' }, triggerAppLoad);
 
 // ☯{ 'app', 'init', 'anon' } => (tao, data) => {
 
 // }
 TAO.addInlineHandler({ t: 'app', a: 'load' },
   (tao, data) => {
+    // once the app is loaded, user login should not prompt loading the app
+    TAO.removeInlineHandler({ t: 'user', a: 'enter', o: 'portal' }, triggerAppLoad);
     return locationToAC(history.location, tao.o === 'portal' ? data.portal.token : undefined);
   });
 
