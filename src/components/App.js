@@ -1,20 +1,27 @@
 import agent from '../agent';
 import Header from './Header';
+import HeaderAlt from './HeaderAlt';
 import React from 'react';
 import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { Route, Switch } from 'react-router-dom';
 import Article from '../components/Article';
 import Editor from '../components/Editor';
-// import Home from '../components/Home';
+import Home from '../components/Home';
 import HomeAlt from '../components/Home/alt';
 import Login from '../components/Login';
+import LoginAlt from '../components/LoginAlt';
 import Profile from '../components/Profile';
 import ProfileFavorites from '../components/ProfileFavorites';
 import Register from '../components/Register';
 import Settings from '../components/Settings';
 import { store } from '../store';
 import { push } from 'react-router-redux';
+import features from '../features.json';
+
+const HeaderFeature = { Header, HeaderAlt };
+const HomeFeature = { Home, HomeAlt };
+const LoginFeature = { Login, LoginAlt };
 
 const mapStateToProps = state => {
   return {
@@ -30,6 +37,13 @@ const mapDispatchToProps = dispatch => ({
   onRedirect: () =>
     dispatch({ type: REDIRECT })
 });
+
+const HeaderComponent = props => {
+  const Header = HeaderFeature[features.Header];
+  return (
+    <Header appName={props.appName} currentUser={props.currentUser} />
+  );
+}
 
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -53,13 +67,10 @@ class App extends React.Component {
     if (this.props.appLoaded) {
       return (
         <div>
-          <Header
-            appName={this.props.appName}
-            currentUser={this.props.currentUser} />
-            <Switch>
-            {/* <Route exact path="/" component={Home}/> */}
-            <Route exact path="/" component={HomeAlt}/>
-            <Route path="/login" component={Login} />
+          {HeaderComponent(this.props)}
+          <Switch>
+            <Route exact path="/" component={HomeFeature[features.Home]}/>
+            <Route path="/login" component={LoginFeature[features.Login]} />
             <Route path="/register" component={Register} />
             <Route path="/editor/:slug" component={Editor} />
             <Route path="/editor" component={Editor} />
@@ -67,15 +78,13 @@ class App extends React.Component {
             <Route path="/settings" component={Settings} />
             <Route path="/@:username/favorites" component={ProfileFavorites} />
             <Route path="/@:username" component={Profile} />
-            </Switch>
+          </Switch>
         </div>
       );
     }
     return (
       <div>
-        <Header
-          appName={this.props.appName}
-          currentUser={this.props.currentUser} />
+        {HeaderComponent(this.props)}
       </div>
     );
   }

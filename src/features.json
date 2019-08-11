@@ -1,0 +1,10 @@
+{
+  "useTAO": true,
+  "Header": "HeaderAlt",
+  "Home": "HomeAlt",
+  "Main": "MainAlt",
+  "Login": "LoginAlt",
+  "redux": {
+    "logger": false
+  }
+}

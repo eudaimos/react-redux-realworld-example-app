@@ -7,9 +7,7 @@ function onClickTag(token) {
   return (tag, page = 0) =>
     TAO.setCtx(
       { t: 'article_tag', a: 'find', o: token ? 'portal' : 'anon' },
-      { tag },
-      { page },
-      { token }
+      [{ tag }, { page }, { token }]
     );
 }
 

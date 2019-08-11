@@ -12,25 +12,35 @@ import { Provider as TaoProvider, DataHandler } from '@tao.js/react';
 import App from './components/App';
 
 import initAC from './tao';
+import features from './features.json';
 
 ReactDOM.render((
   <TaoProvider TAO={TAO}>
     <DataHandler
       name="appData"
-      term="app" action="init"
-      handler={(tao, data, set, current) => ({ ...current, ...data })}
+      term="app" action="load"
+      handler={(tao, data, set, current) => ({ ...current, ...data.app })}
       default={{ name: '' }}
     >
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route path="/" component={App} />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>
+      <DataHandler
+        name="currentUser"
+        term="user" action={['enter', 'exit']}
+        default={null}
+        handler={(tao, data) => tao.a === 'enter' ? data.user : null}
+      >
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route path="/" component={App} />
+            </Switch>
+          </ConnectedRouter>
+        </Provider>
+      </DataHandler>
     </DataHandler>
   </TaoProvider>
 
 ), document.getElementById('root'));
 
-TAO.setAppCtx(initAC);
+if (features.useTAO) {
+  TAO.setAppCtx(initAC);
+}
