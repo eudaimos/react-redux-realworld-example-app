@@ -14,6 +14,7 @@ import LoginAlt from '../components/LoginAlt';
 import Profile from '../components/Profile';
 import ProfileFavorites from '../components/ProfileFavorites';
 import Register from '../components/Register';
+import RegisterAlt from '../components/RegisterAlt';
 import Settings from '../components/Settings';
 import { store } from '../store';
 import { push } from 'react-router-redux';
@@ -22,6 +23,7 @@ import features from '../features.json';
 const HeaderFeature = { Header, HeaderAlt };
 const HomeFeature = { Home, HomeAlt };
 const LoginFeature = { Login, LoginAlt };
+const RegisterFeature = { Register, RegisterAlt };
 
 const mapStateToProps = state => {
   return {
@@ -71,7 +73,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomeFeature[features.Home]}/>
             <Route path="/login" component={LoginFeature[features.Login]} />
-            <Route path="/register" component={Register} />
+            <Route path="/register" component={RegisterFeature[features.Register]} />
             <Route path="/editor/:slug" component={Editor} />
             <Route path="/editor" component={Editor} />
             <Route path="/article/:id" component={Article} />

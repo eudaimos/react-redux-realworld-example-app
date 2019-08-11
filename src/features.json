@@ -4,6 +4,7 @@
   "Home": "HomeAlt",
   "Main": "MainAlt",
   "Login": "LoginAlt",
+  "Register": "RegisterAlt",
   "redux": {
     "logger": false
   }

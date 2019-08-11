@@ -12,13 +12,19 @@ function onSubmit(user) {
 
 const LoginWrapper = () => (
   <RenderHandler term="user" action={['view', 'fail']} orient="anon">
-    {(tao, data) => (
-      <Login
-        onRegister={nav.goRegister}
-        onSubmit={onSubmit}
-        errors={tao.a === 'fail' ? data.fail.errors || data.fail.error : []}
-      />
-    )}
+    {(tao, data) => {
+      if (tao.a === 'fail' && !data.fail.auth) {
+        return null;
+      }
+      return (
+        <Login
+          onRegister={nav.goRegister}
+          onSubmit={onSubmit}
+          action={tao.a}
+          errors={tao.a === 'fail' ? data.fail.errors || data.fail.error : []}
+        />
+      )
+    }}
   </RenderHandler>
 );
 

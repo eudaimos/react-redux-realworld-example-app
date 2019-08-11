@@ -58,11 +58,11 @@ TAO.addInlineHandler({ t: 'user', a: 'add', o: 'anon' }, (tao, data) => {
     .then(({ user }) => {
       // window.localStorage.setItem('jwt', user.token);
 
-      new AppCtx('user', 'enter', 'portal', user, null, { token: user.token });
+      return new AppCtx('user', 'enter', 'portal', user, null, { token: user.token });
     })
     .catch(err => {
       const { errors } = err.response ? err.response.body : {};
-      return new AppCtx('user', 'fail', 'anon', { username, email, password }, { errors });
+      return new AppCtx('user', 'fail', 'anon', { username, email, password }, { errors, add: true });
     });
 });
 

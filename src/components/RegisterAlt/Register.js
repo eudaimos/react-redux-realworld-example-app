@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import ListErrors from '../ListErrors';
 import React from 'react';
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       email: '',
       password: '',
       inProgress: false,
@@ -31,25 +32,26 @@ class Login extends React.Component {
   };
 
   handleSubmit = event => {
-    const { email, password } = this.state;
-    this.props.onSubmit({ email, password });
+    const { username, email, password } = this.state;
+    this.props.onSubmit({ username, email, password });
     event.preventDefault();
     this.setState({ inProgress: true });
   };
 
   render() {
-    const { errors, onRegister } = this.props;
-    const { email, password, inProgress } = this.state;
+    const { username, email, password, inProgress } = this.state;
+    const { onLogin, errors } = this.props;
+
     return (
       <div className="auth-page">
         <div className="container page">
           <div className="row">
 
             <div className="col-md-6 offset-md-3 col-xs-12">
-              <h1 className="text-xs-center">Sign In</h1>
+              <h1 className="text-xs-center">Sign Up</h1>
               <p className="text-xs-center">
-                <Link to="/register" onClick={onRegister}>
-                  Need an account?
+                <Link to="/login" onClick={onLogin}>
+                  Have an account?
                 </Link>
               </p>
 
@@ -57,6 +59,16 @@ class Login extends React.Component {
 
               <form onSubmit={this.handleSubmit}>
                 <fieldset>
+
+                  <fieldset className="form-group">
+                    <input
+                      name="username"
+                      className="form-control form-control-lg"
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      onChange={this.handleChange} />
+                  </fieldset>
 
                   <fieldset className="form-group">
                     <input
@@ -82,7 +94,7 @@ class Login extends React.Component {
                     className="btn btn-lg btn-primary pull-xs-right"
                     type="submit"
                     disabled={inProgress}>
-                    Sign in
+                    Sign up
                   </button>
 
                 </fieldset>
@@ -96,4 +108,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Register;
