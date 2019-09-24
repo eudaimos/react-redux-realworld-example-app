@@ -177,10 +177,7 @@ More details for how these will be/are implemented are found in the [Path defini
 |0.|`=>`|`article`|`load`|`portal`||
 |1.|`\=>`|`comment`|`find`|`portal`|[Display Article Comments](#display-article-comments)|
 |2.|`=>`|`article`|`enter`|`portal`|set the URL to `/article/:slug`|
-|3.|`=>`|`article`|`view`|`portal`|User sees article page w options:<br/>
-[Comment on Article](#comment-on-article)<br/>
-[Delete Article Comment](#delete-article-comment)<br/>
-[Favorite Article](#favorite-article) OR [Unfavorite Article](#unfavorite-article)|
+|3.|`=>`|`article`|`view`|`portal`|User sees article page w options:<br/>[Comment on Article](#comment-on-article),<br/>[Delete Article Comment](#delete-article-comment),<br/>[ [Favorite Article](#favorite-article) OR [Unfavorite Article](#unfavorite-article) ]|
 
 ## Display Article Comments
 
@@ -240,8 +237,7 @@ More details for how these will be/are implemented are found in the [Path defini
 |0.|`=>`|`profile`|`load`|`anon`||
 |1.|`\=>`|`profile_article`|`find`|`portal`|[Display Profile Articles](#display-profile-articles)|
 |2.|`=>`|`profile`|`enter`|`anon`|set the URL to `/@:profile_name`|
-|3.|`=>`|`profile`|`view`|`anon`|User sees profile page w options:<br/>
-[Read Article Anonymously](#read-article-anonymously)|
+|3.|`=>`|`profile`|`view`|`anon`|User sees profile page w option:<br/>[Read Article Anonymously](#read-article-anonymously)|
 
 ## View Profile Logged In
 
@@ -260,9 +256,7 @@ More details for how these will be/are implemented are found in the [Path defini
 |0.|`=>`|`profile`|`load`|`portal`||
 |1.|`\=>`|`profile_article`|`find`|`portal`|[Display Profile Articles](#display-profile-articles)|
 |2.|`=>`|`profile`|`enter`|`portal`|set the URL to `/article/:slug`|
-|3.|`=>`|`profile`|`view`|`portal`|User sees profile page w options:<br/>
-[Read Article Logged In](#read-article-logged-in)<br/>
-[Follow Profile](#follow-profile) OR [Unfollow Profile](#unfollow-profile)|
+|3.|`=>`|`profile`|`view`|`portal`|User sees profile page w options:<br/>[Read Article Logged In](#read-article-logged-in),<br/>[ [Follow Profile](#follow-profile) OR [Unfollow Profile](#unfollow-profile) ]|
 
 ## Display Profile Articles
 
