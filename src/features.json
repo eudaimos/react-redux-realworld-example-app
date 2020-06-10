@@ -1,5 +1,9 @@
 {
   "useTAO": true,
+  "api": {
+    "local": true
+  },
+  "fetchUser": false,
   "components": {
     "Header": "HeaderAlt",
     "Home": "HomeAlt",
@@ -7,7 +11,7 @@
     "Login": "LoginAlt",
     "Register": "RegisterAlt",
     "Settings": "SettingsAlt",
-    "Editor": "EditorAlt",
+    "Editor": "Editor",
     "Article": "Article",
     "Profile": "Profile",
     "ProfileFavorites": "ProfileFavorites"
