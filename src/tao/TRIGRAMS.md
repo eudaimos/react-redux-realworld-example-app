@@ -11,6 +11,7 @@ implementation details in our [Paths](PATHS.md) definitions.
 
 * `app` - represents the application itself
 * `user` - represents a `User` of the `App` when they interact with the `App`
+* `auth` - represents the authenticated `User`'s identity and authorization
 * `profile` - represents other `User`s of the `App` to a given `User`
 * `article` - content created by `User`s of the `App`
 * `tag` - a way to group `Article`s around a common theme
@@ -45,24 +46,29 @@ from the perspective of interacting with objects in time and space
 
 ### Common Action Chains
 
-||
 |---|
 |Creating|
 |`new` => `add` => `create` => `load` => `enter` => `view`|
 |Creating Error|
 |`new` => `add` => `fail`|
+|`new` => `add` => `create` => `fail`|
 |Editing|
 |`edit` => `update` => `save` => `load` => `enter` => `view`|
 |Editing Error|
 |`edit` => `update` => `fail`|
+|`edit` => `update` => `save` => `fail`|
 |Removing|
-|`delete` => `remove`|
+|`delete` => `remove` => `unload` => `leave`|
+|Removing Error|
+|`delete` => `remove` => `fail`|
 |Selecting & Viewing|
 |`select` => `locate` => `retrieve` => `load` => `enter` => `view`|
 |Missing resource|
 |`select` => `locate` => `missing`|
 |Listing|
 |`find` => `fetch` => `list` => `browse`|
+|Listing Error|
+|`find` => `fetch` => `fail`|
 |Enter & Exit|
 |`enter` => `leave`|
 
