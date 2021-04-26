@@ -3,22 +3,33 @@ import TAO, { AppCtx } from '@tao.js/core';
 import { DataHandler, RenderHandler } from '@tao.js/react';
 import Home from './Home';
 
-TAO.addInlineHandler({ t: 'home', a: 'enter' },
-  (tao, data) => new AppCtx('home', 'view', tao.o, { orient: data[tao.o] }));
+TAO.addInlineHandler(
+  { t: 'home', a: 'enter' },
+  (tao, data) => new AppCtx('home', 'view', tao.o, { orient: data[tao.o] })
+);
 
 function clickAll(token) {
-  return () => new AppCtx('article', 'find', token ? 'portal' : 'anon', { portal: { token }});
+  return () =>
+    new AppCtx('article', 'find', token ? 'portal' : 'anon', {
+      portal: { token },
+    });
 }
 
 function clickFeed(token) {
-  return () => new AppCtx('article', 'find', token ? 'portal' : 'anon', { find: { feed: true }, portal: { token }});
+  return () =>
+    new AppCtx('article', 'find', token ? 'portal' : 'anon', {
+      find: { feed: true },
+      portal: { token },
+    });
 }
 
 const NOOP = () => {};
 
-const HomeAlt = props => (
+const HomeAlt = (props) => (
   <DataHandler
-    name="tabs" term={['article', 'article_tag']} action="find"
+    name="tabs"
+    term={['article', 'article_tag']}
+    action="find"
     default={{ active: 'all' }}
     handler={(tao, data, setCtxData, current) => {
       console.group('DataHandler[`tabs`]:');
@@ -65,6 +76,6 @@ const HomeAlt = props => (
       }}
     </RenderHandler>
   </DataHandler>
-)
+);
 
 export default HomeAlt;

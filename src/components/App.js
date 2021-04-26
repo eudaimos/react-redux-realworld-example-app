@@ -21,7 +21,7 @@ import SettingsAlt from '../components/SettingsAlt';
 
 import { store } from '../store';
 import { push } from 'react-router-redux';
-import { components } from '../features.json';
+import { useTAO, fetchUser, components } from '../features.json';
 
 const HeaderFeature = { Header, HeaderAlt };
 const HomeFeature = { Home, HomeAlt };
@@ -33,27 +33,25 @@ const ArticleFeature = { Article };
 const ProfileFeature = { Profile };
 const ProfileFavoritesFeature = { ProfileFavorites };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     appLoaded: state.common.appLoaded,
     appName: state.common.appName,
     currentUser: state.common.currentUser,
-    redirectTo: state.common.redirectTo
-  }};
+    redirectTo: state.common.redirectTo,
+  };
+};
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onLoad: (payload, token) =>
     dispatch({ type: APP_LOAD, payload, token, skipTracking: true }),
-  onRedirect: () =>
-    dispatch({ type: REDIRECT })
+  onRedirect: () => dispatch({ type: REDIRECT }),
 });
 
-const HeaderComponent = props => {
+const HeaderComponent = (props) => {
   const Header = HeaderFeature[components.Header];
-  return (
-    <Header appName={props.appName} currentUser={props.currentUser} />
-  );
-}
+  return <Header appName={props.appName} currentUser={props.currentUser} />;
+};
 
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -70,33 +68,52 @@ class App extends React.Component {
       agent.setToken(token);
     }
 
-    this.props.onLoad(token ? agent.Auth.current() : null, token);
+    if (fetchUser) {
+      this.props.onLoad(token ? agent.Auth.current() : null, token);
+    }
   }
 
   render() {
-    if (this.props.appLoaded) {
+    if (useTAO || this.props.appLoaded) {
       return (
         <div>
           {HeaderComponent(this.props)}
           <Switch>
-            <Route exact path="/" component={HomeFeature[components.Home]}/>
+            <Route exact path="/" component={HomeFeature[components.Home]} />
             <Route path="/login" component={LoginFeature[components.Login]} />
-            <Route path="/register" component={RegisterFeature[components.Register]} />
-            <Route path="/editor/:slug" component={EditorFeature[components.Editor]} />
-            <Route path="/editor" component={EditorFeature[components.Editor]} />
-            <Route path="/article/:id" component={ArticleFeature[components.Article]} />
-            <Route path="/settings" component={SettingsFeature[components.Settings]} />
-            <Route path="/@:username/favorites" component={ProfileFavoritesFeature[components.ProfileFavorites]} />
-            <Route path="/@:username" component={ProfileFeature[components.Profile]} />
+            <Route
+              path="/register"
+              component={RegisterFeature[components.Register]}
+            />
+            <Route
+              path="/editor/:slug"
+              component={EditorFeature[components.Editor]}
+            />
+            <Route
+              path="/editor"
+              component={EditorFeature[components.Editor]}
+            />
+            <Route
+              path="/article/:id"
+              component={ArticleFeature[components.Article]}
+            />
+            <Route
+              path="/settings"
+              component={SettingsFeature[components.Settings]}
+            />
+            <Route
+              path="/@:username/favorites"
+              component={ProfileFavoritesFeature[components.ProfileFavorites]}
+            />
+            <Route
+              path="/@:username"
+              component={ProfileFeature[components.Profile]}
+            />
           </Switch>
         </div>
       );
     }
-    return (
-      <div>
-        {HeaderComponent(this.props)}
-      </div>
-    );
+    return <div>{HeaderComponent(this.props)}</div>;
   }
 }
 
